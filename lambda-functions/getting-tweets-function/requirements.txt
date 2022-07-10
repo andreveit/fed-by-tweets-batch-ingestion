@@ -1,0 +1,5 @@
+av-tweet-ingestion
+pandas
+boto3
+
+
