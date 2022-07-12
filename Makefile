@@ -9,3 +9,6 @@ utils-tests:
 
 tweets-to-silver-function-tests:
 	pytest -vv lambda-functions/tweets-to-silver-function/unit-tests
+
+users-to-silver-function-tests:
+	pytest -vv lambda-functions/users-to-silver-function/unit-tests
