@@ -6,3 +6,6 @@ processing-raw-function-tests:
 
 utils-tests:
 	pytest -vv lambda-functions/utils
+
+tweets-to-silver-function-tests:
+	pytest -vv lambda-functions/tweets-to-silver-function/unit-tests
