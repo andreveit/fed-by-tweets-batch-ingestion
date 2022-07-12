@@ -1,14 +1,14 @@
-getting-tweets-function-tests:
+test-getting-tweets-function:
 	bash lambda-functions/getting-tweets/integration-tests/run.sh
 
-processing-raw-function-tests:
+test-processing-raw-function:
 	bash lambda-functions/processing-raw-function/unit-tests/run_unit_tests.sh
 
-utils-tests:
+test-utils:
 	pytest -vv lambda-functions/utils
 
-tweets-to-silver-function-tests:
+test-tweets-to-silver-function:
 	pytest -vv lambda-functions/tweets-to-silver-function/unit-tests
 
-users-to-silver-function-tests:
+test-users-to-silver-function:
 	pytest -vv lambda-functions/users-to-silver-function/unit-tests
