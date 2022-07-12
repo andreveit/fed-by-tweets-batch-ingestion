@@ -1,6 +1,6 @@
 test-getting-tweets-function:
-	bash lambda-functions/getting-tweets/integration-tests/run.sh
-
+	bash lambda-functions/getting-tweets-function/integration-tests/run.sh
+	
 test-processing-raw-function:
 	bash lambda-functions/processing-raw-function/unit-tests/run_unit_tests.sh
 
