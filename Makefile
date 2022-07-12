@@ -12,3 +12,7 @@ test-tweets-to-silver-function:
 
 test-users-to-silver-function:
 	pytest -vv lambda-functions/users-to-silver-function/unit-tests
+
+test-places-to-silver-function:
+	pytest -vv lambda-functions/places-to-silver-function/unit-tests
+	

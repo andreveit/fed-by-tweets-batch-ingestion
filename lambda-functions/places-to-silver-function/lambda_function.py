@@ -1,21 +1,18 @@
 import logging
 import pandas as pd
 import awswrangler as wr
+from helper_functions import filter_last_update, setup_datatypes
 from utils import FilesLister, build_file_name
-from helper_functions import reorder_cols, setup_datatypes
 
-TABLE = 'tweets'
+TABLE = 'places'
 S3_BUCKET_NAME = 'twitter-project-data-lake-andre'
 S3_KEY_BRONZE = f'bronze/batch/tabular/{TABLE}/'
 S3_KEY_SILVER = 'silver/'
 
 
+
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
-
-
-
-
 
 
 def lambda_handler(event, context):
@@ -30,20 +27,13 @@ def lambda_handler(event, context):
     
     
     # APPLY TRANSFORMATIONS
-    
-    # Subject Column
-    df['subject'] = df.file_name.apply(lambda x: x.split('/')[0])
-    
-    # Drop duplicates
-    df = df.drop_duplicates(subset=['id', 'subject'])
-    
-    # Reorder columns
-    df = reorder_cols(df)
 
+    # Filter latest update
+    df = filter_last_update(df)
+    
+    
     # Setup datatypes
     df = setup_datatypes(df)
-
-
 
     logger.info('Dataset processed successfully.')
     

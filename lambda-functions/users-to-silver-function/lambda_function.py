@@ -1,6 +1,7 @@
 import logging
 import pandas as pd
 import awswrangler as wr
+from helper_functions import filter_last_update, setup_datatypes
 from utils import FilesLister, build_file_name
 
 TABLE = 'users'
@@ -12,6 +13,7 @@ S3_KEY_SILVER = 'silver/'
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
+
 
 
 def lambda_handler(event, context):
@@ -28,23 +30,10 @@ def lambda_handler(event, context):
     # APPLY TRANSFORMATIONS
     
     # Filter latest update
-    df = df.sort_values('import_date', ascending = False)
-    df['latest'] = df.groupby('id').cumcount()
-    df = df[df.latest == 0].drop(columns=['latest'])
-    
+    df = filter_last_update(df)
     
     # Setup datatypes
-    df.id = df.id.astype('int64')
-    df.username = df.username.astype('string')
-    df.name = df.name.astype('string')
-    df.location = df.location.astype('string')
-    df.followers_count = df.followers_count.astype('int32')
-    df.following_count = df.following_count.astype('int32')
-    df.listed_count = df.listed_count.astype('int32')
-    df.tweet_count = df.tweet_count.astype('int32')
-    df.verified = df.verified.astype(bool)
-    df.import_date = pd.to_datetime(df.import_date)
-    df.file_name = df.file_name.astype('string')
+    df = setup_datatypes(df)
 
     logger.info('Dataset processed successfully.')
     
