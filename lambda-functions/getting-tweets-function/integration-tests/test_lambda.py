@@ -3,7 +3,7 @@ import json
 
 url = 'http://localhost:8080/2015-03-31/functions/function/invocations'
 
-expected_response = reponse = {
+expected_response = {
         'statusCode': 200
     }
 
