@@ -1,3 +1,8 @@
-getting-tweets-test:
+getting-tweets-function-tests:
 	bash lambda-functions/getting-tweets/integration-tests/run.sh
 
+processing-raw-function-tests:
+	bash lambda-functions/processing-raw-function/unit-tests/run_unit_tests.sh
+
+utils-tests:
+	pytest -vv lambda-functions/utils

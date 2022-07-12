@@ -2,9 +2,11 @@ import pytest
 import utils
 from utils import FilesLister
 import json
+import os
 
 def load_json(filename):
-    with open('tests/data/' + filename, 'r') as file:
+    print(os.getcwd())
+    with open('lambda-functions/utils/tests/data/' + filename, 'r') as file:
         return json.load(file)
 
 def file_lister():

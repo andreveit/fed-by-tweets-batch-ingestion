@@ -1,4 +1,3 @@
-from jinja2 import pass_context
 import pytest
 import json
 import pandas as pd
@@ -9,7 +8,7 @@ from datetime import datetime
 
 class ParserMock(Parser):
     def _load_file(self):
-        with open('tests/data/sample_tweet_file.json', 'r') as file:
+        with open('data/sample_tweet_file.json', 'r') as file:
             self.file = json.load(file)
 
 def standardize(df):
@@ -29,20 +28,20 @@ def processor_mock():
 
 
 def test_parse_tweets(parser_mock):
-    expected = standardize(pd.read_csv('tests/data/expected_parse_tweets.csv'))
+    expected = standardize(pd.read_csv('data/expected_parse_tweets.csv'))
     actual = standardize(parser_mock._parse_tweets())
 
     pd.testing.assert_frame_equal(expected, actual)
 
 
 def test_parse_places(parser_mock):
-    expected = standardize(pd.read_csv('tests/data/expected_parse_places.csv'))
+    expected = standardize(pd.read_csv('data/expected_parse_places.csv'))
     actual = standardize(parser_mock._parse_places())
 
     pd.testing.assert_frame_equal(expected, actual)
 
 def test_parse_users(parser_mock):
-    expected = standardize(pd.read_csv('tests/data/expected_parse_users.csv'))
+    expected = standardize(pd.read_csv('data/expected_parse_users.csv'))
     actual = standardize(parser_mock._parse_users())
 
     pd.testing.assert_frame_equal(expected, actual)

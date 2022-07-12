@@ -6,6 +6,8 @@ from ingestion.writers import S3Writer
 
 
 get_secrets()
+print('S3_ACESS_KEY = ',os.getenv('S3_ACESS_KEY'))
+print('S3_SECRET_KEY = ',os.getenv('S3_SECRET_KEY'))
 
 def lambda_handler(event, context):
     
