@@ -10,7 +10,8 @@ RUN  pip3 install pandas \
                     boto3 \
                     pytest \
                     numpy \
-                    pandas
+                    pandas \
+                    requests
 
 WORKDIR /unit-tests
 

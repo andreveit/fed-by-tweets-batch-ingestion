@@ -12,20 +12,23 @@ add_utils_to_path()
 from utils import LoadedFilesChecker, LocalLambdaTester
 
 
-
 # SETUP TEST
 
 #**S3 acess keys should be on env
-FUNCTION_NAME = 'Getting Tweets Lambda Function'
+FUNCTION_NAME = 'Processing Raw Lambda Function'
+
 S3_BUCKET_NAME = os.getenv('S3_BUCKET_NAME', 'twitter-project-data-lake-andre-testing')
+S3_KEY_TABULAR_TWEETS = os.getenv('S3_KEY_TABULAR_TWEETS','bronze/batch/tabular/tweets/')
+S3_KEY_TABULAR_PLACES = os.getenv('S3_KEY_TABULAR_PLACES','bronze/batch/tabular/places/')
+S3_KEY_TABULAR_USERS = os.getenv('S3_KEY_TABULAR_USERS','bronze/batch/tabular/users/')
 
 
 s3_folders = [
-    'bronze/batch/raw/lula/',
-    'bronze/batch/raw/bolsonaro/',
+    S3_KEY_TABULAR_TWEETS,
+    S3_KEY_TABULAR_PLACES,
+    S3_KEY_TABULAR_USERS
 ]
 filer_checker = LoadedFilesChecker(S3_BUCKET_NAME, s3_folders).init()
-
 
 
 # TESTING RESPONSE FROM LAMBDA
@@ -40,26 +43,3 @@ filer_checker.run_asserts()
 print('\n\n','-'*40)
 print(f'{FUNCTION_NAME} status: OK.')
 print('-'*40, '\n\n')
-
-
-
-# import requests
-# import json
-
-# url = 'http://localhost:8080/2015-03-31/functions/function/invocations'
-
-# expected_response = {
-#         'statusCode': 200
-#     }
-
-# event = {
-#     'foo':'bar'
-# }
-
-# print('Triggering getting-tweets lambda function...')
-# actual_response = requests.post(url, json=event).json()
-
-# print(json.dumps(actual_response, indent=2))
-
-# assert expected_response == actual_response, 'Received unexpected response.'
-# print('Getting Tweets Lambda function status: OK.')

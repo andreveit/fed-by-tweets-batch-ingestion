@@ -1,4 +1,3 @@
-import pytest
 import utils
 from utils import FilesLister
 import json

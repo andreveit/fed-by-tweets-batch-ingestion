@@ -13,7 +13,7 @@ fi
 
 docker run -d --rm --name gettingtweets \
     -p 8080:8080 \
-    -e S3_BUCKET_NAME="twitter-project-data-lake-andre-staging" \
+    -e S3_BUCKET_NAME="twitter-project-data-lake-andre-testing" \
     -e S3_LANDING_LAYER="bronze" \
     -e S3_ACESS_KEY=$AWS_ACCESS_KEY_ID \
     -e S3_SECRET_KEY=$AWS_SECRET_ACCESS_KEY \
@@ -24,6 +24,7 @@ docker run -d --rm --name gettingtweets \
 
 sleep 5
 
+echo ""
 echo "Runnig tests..."
 python3 test_lambda.py
 
