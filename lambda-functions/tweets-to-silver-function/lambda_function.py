@@ -1,21 +1,21 @@
+import os
 import logging
-import pandas as pd
 import awswrangler as wr
-from utils import FilesLister, build_file_name
+from utils import FilesLister, build_file_name, get_database
 from helper_functions import reorder_cols, setup_datatypes
 
+LAYER = 'silver'
 TABLE = 'tweets'
-S3_BUCKET_NAME = 'twitter-project-data-lake-andre'
-S3_KEY_BRONZE = f'bronze/batch/tabular/{TABLE}/'
-S3_KEY_SILVER = 'silver/'
 
+S3_BUCKET_NAME = os.getenv('S3_BUCKET_NAME', 'twitter-project-data-lake-andre-testing')
+S3_KEY_BRONZE = os.getenv('S3_KEY_BRONZE',f'bronze/batch/tabular/{TABLE}/')
+S3_KEY_SILVER = os.getenv('S3_KEY_SILVER',f'{LAYER}/')
+
+
+database = get_database(S3_BUCKET_NAME, LAYER)
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
-
-
-
-
 
 
 def lambda_handler(event, context):
@@ -56,7 +56,7 @@ def lambda_handler(event, context):
             path=build_file_name(S3_BUCKET_NAME, S3_KEY_SILVER + TABLE),
             dataset=True,
             mode="overwrite",
-            database="silver",
+            database=database,
             table=TABLE
     )
     logger.info(f'Table silver.{TABLE} saved successfully.')
