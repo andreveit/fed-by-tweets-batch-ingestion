@@ -53,13 +53,13 @@ def lambda_handler(event, context):
     
     wr.s3.to_parquet(
             df=df,
-            path=build_file_name(S3_BUCKET_NAME, S3_KEY_SILVER + TABLE),
+            path='s3://'+S3_BUCKET_NAME+'/'+S3_KEY_SILVER+TABLE+'.parquet',
             dataset=True,
             mode="overwrite",
             database=database,
             table=TABLE
     )
-    logger.info(f'Table silver.{TABLE} saved successfully.')
+    logger.info(f'Table {LAYER}.{TABLE} saved successfully.')
     
     
     return {

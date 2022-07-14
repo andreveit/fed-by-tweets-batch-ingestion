@@ -16,10 +16,10 @@ from utils import LoadedFilesChecker, LocalLambdaTester
 # SETUP TEST
 
 #**S3 acess keys should be on env
-FUNCTION_NAME = 'Tweets to Silver Lambda Function'
+FUNCTION_NAME = 'Users to Silver Lambda Function'
 
 S3_BUCKET_NAME = os.getenv('S3_BUCKET_NAME', 'twitter-project-data-lake-andre-testing')
-S3_KEY_SILVER = os.getenv('S3_KEY_SILVER','silver/tweets.parquet/')
+S3_KEY_SILVER = os.getenv('S3_KEY_SILVER','silver/users.parquet/')
 
 filer_checker = LoadedFilesChecker(S3_BUCKET_NAME, [S3_KEY_SILVER]).init()
 

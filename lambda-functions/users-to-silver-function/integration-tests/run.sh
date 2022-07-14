@@ -6,10 +6,10 @@ cd ../..
 
 if [ "${LOCAL_IMAGE_NAME}" == "" ]; then 
     LOCAL_TAG=`date +"%Y-%m-%d-%H-%M"`
-    export LOCAL_IMAGE_NAME="tweetstosilver:${LOCAL_TAG}"
+    export LOCAL_IMAGE_NAME="userstosilver:${LOCAL_TAG}"
     echo "LOCAL_IMAGE_NAME is not set, building a new image with tag ${LOCAL_IMAGE_NAME}"
     
-    docker build -t ${LOCAL_IMAGE_NAME} -f ./dockerfile.twtsilv-inttest .
+    docker build -t ${LOCAL_IMAGE_NAME} -f ./dockerfile.usersilv-inttest .
 
 
 else
@@ -17,7 +17,7 @@ else
 fi
 
 
-docker run -d --rm -it --name tweetstosilver \
+docker run -d --rm -it --name userstosilver \
     -p 8080:8080 \
     -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
     -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
@@ -29,14 +29,14 @@ sleep 5
 
 echo ""
 echo "Runnig tests..."
-python3 ./tweets-to-silver-function/integration-tests/test_lambda.py
+python3 ./users-to-silver-function/integration-tests/test_lambda.py
 
 ERROR_CODE=$?
 
 if [ ${ERROR_CODE} != 0 ]; then
-    docker logs tweetstosilver
-    docker kill tweetstosilver
+    docker logs userstosilver
+    docker kill userstosilver
     exit ${ERROR_CODE}
 fi
 
-docker kill tweetstosilver
+docker kill userstosilver
