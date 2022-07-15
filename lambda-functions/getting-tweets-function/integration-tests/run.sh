@@ -21,6 +21,12 @@ docker run -d --rm --name gettingtweets \
     ${LOCAL_IMAGE_NAME}
 
 
+ERROR_CODE=$?
+if [ ${ERROR_CODE} != 0 ]; then
+    exit ${ERROR_CODE}
+fi
+
+
 
 sleep 5
 

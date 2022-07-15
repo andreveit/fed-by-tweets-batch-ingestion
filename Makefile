@@ -21,10 +21,4 @@ test-places-to-silver-function:
 	pytest -vv lambda-functions/places-to-silver-function/unit-tests
 	bash lambda-functions/places-to-silver-function/integration-tests/run.sh
 
-tests:
-	test-utils
-	test-getting-tweets-function 
-	test-processing-raw-function
-	test-tweets-to-silver-function
-	test-users-to-silver-function
-	test-places-to-silver-function
+tests: test-utils test-getting-tweets-function test-processing-raw-function test-tweets-to-silver-function test-users-to-silver-function test-places-to-silver-function
