@@ -72,6 +72,6 @@ jobs:
         IMAGE_TAG: gettingtweets
       run: |
         echo $(ls)
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f fed-by-tweets-batch-ingestion/lambda-functions/getting-tweets-function/integration-tests/dockerfile .
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f ./lambda-functions/getting-tweets-function/integration-tests/dockerfile .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
