@@ -1,19 +1,22 @@
+import os
 import logging
 import pandas as pd
 import awswrangler as wr
 from helper_functions import filter_last_update, setup_datatypes
-from utils import FilesLister, build_file_name
+from utils import FilesLister, get_database
 
+LAYER = 'silver'
 TABLE = 'places'
-S3_BUCKET_NAME = 'twitter-project-data-lake-andre'
-S3_KEY_BRONZE = f'bronze/batch/tabular/{TABLE}/'
-S3_KEY_SILVER = 'silver/'
+
+S3_BUCKET_NAME = os.getenv('S3_BUCKET_NAME', 'twitter-project-data-lake-andre-testing')
+S3_KEY_BRONZE = os.getenv('S3_KEY_BRONZE',f'bronze/batch/tabular/{TABLE}/')
+S3_KEY_SILVER = os.getenv('S3_KEY_SILVER',f'{LAYER}/')
 
 
+database = get_database(S3_BUCKET_NAME, LAYER)
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
-
 
 def lambda_handler(event, context):
     
@@ -43,10 +46,10 @@ def lambda_handler(event, context):
     
     wr.s3.to_parquet(
             df=df,
-            path=build_file_name(S3_BUCKET_NAME, S3_KEY_SILVER + TABLE),
+            path='s3://'+S3_BUCKET_NAME+'/'+S3_KEY_SILVER+TABLE+'.parquet',
             dataset=True,
             mode="overwrite",
-            database="silver",
+            database=database,
             table=TABLE
     )
     logger.info(f'Table silver.{TABLE} saved successfully.')
