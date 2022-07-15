@@ -1,24 +1,24 @@
 
-test-getting-tweets-function:
+test-getweets:
 	bash lambda-functions/getting-tweets-function/integration-tests/run.sh
 
-test-processing-raw-function:
+test-procraw:
 	bash lambda-functions/processing-raw-function/unit-tests/run.sh
 	bash lambda-functions/processing-raw-function/integration-tests/run.sh
 
 test-utils:
 	pytest -vv lambda-functions/utils
 
-test-tweets-to-silver-function:
+test-tweetsts:
 	pytest -vv lambda-functions/tweets-to-silver-function/unit-tests
 	bash lambda-functions/tweets-to-silver-function/integration-tests/run.sh
 
-test-users-to-silver-function:
+test-usersts:
 	pytest -vv lambda-functions/users-to-silver-function/unit-tests
 	bash lambda-functions/users-to-silver-function/integration-tests/run.sh
 
-test-places-to-silver-function:
+test-placests:
 	pytest -vv lambda-functions/places-to-silver-function/unit-tests
 	bash lambda-functions/places-to-silver-function/integration-tests/run.sh
 
-tests: test-utils test-getting-tweets-function test-processing-raw-function test-tweets-to-silver-function test-users-to-silver-function test-places-to-silver-function
+tests: test-utils test-getweets test-procraw test-tweetsts test-usersts test-placests
