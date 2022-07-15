@@ -19,30 +19,30 @@ env:
 #   contents: read
 
 jobs:
-  # ci:
-  #   name: Test code and push images to ECR
-  #   runs-on: ubuntu-latest
-  #   environment: staging
+  ci:
+    name: Test code and push images to ECR
+    runs-on: ubuntu-latest
+    environment: staging
 
-  #   steps:
-  #   - name: Checkout
-  #     uses: actions/checkout@v3
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
 
-  #   - name: Set up Python 3.8
-  #     uses: actions/setup-python@v3
-  #     with:
-  #       python-version: 3.8
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v3
+      with:
+        python-version: 3.8
 
-  #   - name: Install dependencies
-  #     run: |
-  #       python -m pip install --upgrade pip
-  #       pip install -r requirements.txt
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
 
-  #   - name: Run tests
-  #     env:
-  #       AWS_REGION: sa-east-1
-  #     run: |
-  #       make tests
+    - name: Run tests
+      env:
+        AWS_REGION: sa-east-1
+      run: |
+        make tests
 
 
   push_images:
