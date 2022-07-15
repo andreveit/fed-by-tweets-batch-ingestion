@@ -86,14 +86,14 @@ jobs:
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_PROCRAW
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_PROCRAW"
 
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_TWEETSTS ./dockerfile.tweetstosilver .
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_TWEETSTS -f ./dockerfile.tweetstosilver .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_TWEETSTS
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_TWEETSTS"
 
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_USERSTS ./dockerfile.userstosilver .
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_USERSTS -f ./dockerfile.userstosilver .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_USERSTS
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_USERSTS"
 
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_PLACESTS ./dockerfile.placestosilver .
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_PLACESTS -f ./dockerfile.placestosilver .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_PLACESTS
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_PLACESTS"
