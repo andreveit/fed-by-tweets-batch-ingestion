@@ -69,9 +69,31 @@ jobs:
       id: build-image
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        IMAGE_TAG: gettingtweets
+        IMAGE_TAG_TWEETS: gettingtweets
+        IMAGE_TAG_PROCRAW: processingraw
+        IMAGE_TAG_TWEETSTS: tweetstosilver
+        IMAGE_TAG_USERSTS: userstosilver
+        IMAGE_TAG_PLACESTS: placestosilver
       run: |
         cd lambda-functions/getting-tweets-function/
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_TWEETS .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_TWEETS
+        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_TWEETS"
+        cd ..
+
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_PROCRAW -f ./dockerfile.processraw .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_PROCRAW
+        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_PROCRAW"
+
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_TWEETSTS ./dockerfile.tweetstosilver .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_TWEETSTS
+        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_TWEETSTS"
+
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_USERSTS ./dockerfile.userstosilver .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_USERSTS
+        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_USERSTS"
+
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_PLACESTS ./dockerfile.placestosilver .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_PLACESTS
+        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_PLACESTS"
