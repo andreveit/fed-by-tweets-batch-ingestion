@@ -10,7 +10,7 @@ if [ "${LOCAL_IMAGE_NAME}" == "" ]; then
     echo "LOCAL_IMAGE_NAME is not set, building a new image with tag ${LOCAL_IMAGE_NAME}"
     
     docker build -t ${LOCAL_IMAGE_NAME} \
-                 -f ./dockerfile.raw-inttest .
+                 -f ./dockerfile.processraw .
 
 
 else
