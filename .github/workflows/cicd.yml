@@ -47,8 +47,9 @@ jobs:
 
   push_images:
     name: Push images to ECR
+    needs: ci
     runs-on: ubuntu-latest
-    environment: main
+    environment: staging
 
     steps:
     - name: Checkout
