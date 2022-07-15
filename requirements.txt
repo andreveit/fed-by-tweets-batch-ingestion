@@ -2,4 +2,4 @@ av-tweet-ingestion
 boto3
 pandas
 requests
-
+pytest
