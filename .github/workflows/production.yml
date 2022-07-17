@@ -1,0 +1,127 @@
+# name: Deploy Ingestion Pipeline - Production
+
+# on:
+#   push:
+#     branches:
+#       - "main"
+#   pull_request:
+#     branches:
+#       - "main"
+
+# env:
+#   AWS_REGION: us-east-1
+#   BEARER_TOKEN: ${{ secrets.BEARER_TOKEN }}
+#   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+# jobs:
+#   tests:
+#     name: Run Tests
+#     runs-on: ubuntu-latest
+#     environment: production
+
+#     steps:
+#     - name: Checkout
+#       uses: actions/checkout@v3
+
+#     - name: Set up Python 3.8
+#       uses: actions/setup-python@v3
+#       with:
+#         python-version: 3.8
+
+#     - name: Install dependencies
+#       run: |
+#         python -m pip install --upgrade pip
+#         pip install -r requirements.txt
+
+#     - name: Run tests
+#       env:
+#         AWS_REGION: sa-east-1
+#       run: |
+#         make tests
+
+
+#   push_images:
+#     name: Push Images to ECR
+#     needs: tests
+#     runs-on: ubuntu-latest
+#     environment: production
+#     env:
+#         ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
+
+#     steps:
+#     - name: Checkout
+#       uses: actions/checkout@v3
+    
+#     - name: Configure AWS credentials
+#       uses: aws-actions/configure-aws-credentials@v1
+#       with:
+#         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#         aws-region: ${{ env.AWS_REGION }}
+
+#     - name: Login to Amazon ECR
+#       id: login-ecr
+#       uses: aws-actions/amazon-ecr-login@v1
+
+#     - name: Build, tag, and push images to Amazon ECR
+#       id: build-image
+#       env:
+#         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+#         IMAGE_TAG_TWEETS: gettingtweets
+#         IMAGE_TAG_PROCRAW: processingraw
+#         IMAGE_TAG_TWEETSTS: tweetstosilver
+#         IMAGE_TAG_USERSTS: userstosilver
+#         IMAGE_TAG_PLACESTS: placestosilver
+#       run: |
+#         cd lambda-functions/getting-tweets-function/
+
+#         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_TWEETS .
+#         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_TWEETS
+#         echo "Pushed image: $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_TWEETS"
+#         cd ..
+
+#         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_PROCRAW -f ./dockerfile.processraw .
+#         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_PROCRAW
+#         echo "Pushed image: $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_PROCRAW"
+
+#         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_TWEETSTS -f ./dockerfile.tweetstosilver .
+#         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_TWEETSTS
+#         echo "Pushed image: $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_TWEETSTS"
+
+#         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_USERSTS -f ./dockerfile.userstosilver .
+#         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_USERSTS
+#         echo "Pushed image: $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_USERSTS"
+
+#         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_PLACESTS -f ./dockerfile.placestosilver .
+#         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_PLACESTS
+#         echo "Pushed image: $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_PLACESTS"
+
+#   deploy:
+#     name: 'Terraform - Deploy'
+#     needs: push_images
+#     runs-on: ubuntu-latest
+#     environment: production
+#     env:
+#         TF_WORKSPACE: ${{ secrets.TF_WORKSPACE }}
+
+#     defaults:
+#       run:
+#         shell: bash
+
+#     steps:
+#     - name: Checkout
+#       uses: actions/checkout@v3
+
+#     - name: Setup Terraform
+#       uses: hashicorp/setup-terraform@v1
+#       with:
+#         cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+#     - name: Terraform Init
+#       run: terraform init
+      
+#     - name: Terraform Apply
+#       run: terraform apply -auto-approve -input=false
+
+

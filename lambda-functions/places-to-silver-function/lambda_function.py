@@ -1,6 +1,5 @@
 import os
 import logging
-import pandas as pd
 import awswrangler as wr
 from helper_functions import filter_last_update, setup_datatypes
 from utils import FilesLister, get_database

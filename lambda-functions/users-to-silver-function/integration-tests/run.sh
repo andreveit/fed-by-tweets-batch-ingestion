@@ -9,7 +9,7 @@ if [ "${LOCAL_IMAGE_NAME}" == "" ]; then
     export LOCAL_IMAGE_NAME="userstosilver:${LOCAL_TAG}"
     echo "LOCAL_IMAGE_NAME is not set, building a new image with tag ${LOCAL_IMAGE_NAME}"
     
-    docker build -t ${LOCAL_IMAGE_NAME} -f ./dockerfile.usersilv-inttest .
+    docker build -t ${LOCAL_IMAGE_NAME} -f ./dockerfile.userstosilver .
 
 
 else

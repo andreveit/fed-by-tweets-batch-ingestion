@@ -1,6 +1,6 @@
-apache-airflow
 av-tweet-ingestion
-pandas
 boto3
-
-
+pandas
+requests
+pytest
+pyarrow
