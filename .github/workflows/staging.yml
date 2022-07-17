@@ -47,7 +47,7 @@ jobs:
 
   push_images:
     name: Push Images to ECR
-    needs: tests
+    # needs: tests
     runs-on: ubuntu-latest
     environment: staging
     env:
