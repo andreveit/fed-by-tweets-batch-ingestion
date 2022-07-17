@@ -117,6 +117,9 @@ jobs:
       uses: hashicorp/setup-terraform@v1
       with:
         cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+    
+    - name: Echo
+      run: echo "TF_WORKSPACE = $TF_WORKSPACE"
 
     - name: Terraform Init
       run: terraform init
@@ -125,4 +128,3 @@ jobs:
       run: terraform apply -auto-approve -input=false
 
 
-      
