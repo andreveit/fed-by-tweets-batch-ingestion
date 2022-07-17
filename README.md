@@ -1,6 +1,5 @@
 # **Fed By Tweets - Batch Ingestion**
 
-<br>
 
 # The Fed By Tweets Project
  
@@ -17,7 +16,6 @@ The architecture is designed to be primarily covered by the AWS Free Tier, but s
 
 ---
 
-<br>
 
 <br>
 
@@ -25,7 +23,6 @@ The architecture is designed to be primarily covered by the AWS Free Tier, but s
 
 This repository should contain the necessary code to setup the tweets ingestion and processing up to the silver layer.
 
-<br>
 
 <br>
 
@@ -34,9 +31,6 @@ This repository should contain the necessary code to setup the tweets ingestion 
 2. [Workflow](#Workflow)
 3. [Data-Lake](#Data-Lake)
 
-
-
-<br>
 
 <br>
 
@@ -49,9 +43,8 @@ This repository should contain the necessary code to setup the tweets ingestion 
 
 <br>
 
-![Ingestion architecture](./misc/architecture.PNG "Ingestion architecture")
+![Ingestion architecture](./misc/full_architecture.PNG "Ingestion architecture")
 
-<br>
 
 <br>
 
@@ -72,7 +65,6 @@ The chart below displays how Step Functions was used to setup the data workflow 
 
 ![Batch workflow - Step Functions](misc/batch-architecture.PNG "Batch workflow - Step Functions")
 
-<br>
 
 <br>
 
