@@ -104,7 +104,9 @@ jobs:
     # needs: push_images
     runs-on: ubuntu-latest
     environment: staging
-
+    env:
+        TF_WORKSPACE: ${{ secrets.TF_WORKSPACE }}
+        
     defaults:
       run:
         shell: bash
